@@ -1,5 +1,22 @@
 {
   "tailwindCSS.experimental.classRegex": [
     ["cva(?:<[^>]*>)?(([^)]*))", "[\"'`]([^\"'`]*).*?[\"'`]", "(?:twMerge|twJoin)\\(([^\\);]*)[\\);]"]
-  ]
+  ],
+  // Enable format on save
+  "editor.formatOnSave": true,
+
+  // Use ESLint for formatting
+  "eslint.format.enable": false,
+
+  // Automatically fix ESLint problems on save
+  "editor.codeActionsOnSave": ["source.organizeImports", "source.fixAll"],
+
+  // Make sure Prettier and ESLint work together
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // Optionally, ensure ESLint fixes are applied before saving
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "json", "html"],
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
