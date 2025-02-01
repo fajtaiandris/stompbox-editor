@@ -11,6 +11,8 @@ export const Ruler: React.FC = () => {
     return null
   }
 
+  const lastPoint = selection.row.points[selection.row.points.length - 1] ?? { x: 0 }
+
   return (
     <g>
       <line
@@ -52,47 +54,49 @@ export const Ruler: React.FC = () => {
 
       {!("point" in selection) && (
         <>
-          {selection.row.points.map((point, i) => (
-            <g key={i}>
-              <line
-                y1={defaultEnclosureOrigo.y - margin}
-                x1={
-                  i === 0
-                    ? defaultEnclosureOrigo.x
-                    : defaultEnclosureOrigo.x + (selection.row.points ? selection.row.points[i - 1].x : 0)
-                }
-                y2={defaultEnclosureOrigo.y - margin}
-                x2={defaultEnclosureOrigo.x + point.x}
-                stroke="lightgray"
-              />
-              <line
-                y1={defaultEnclosureOrigo.y - margin - tickLength / 2}
-                x1={i === 0 ? defaultEnclosureOrigo.x : defaultEnclosureOrigo.x + selection.row.points[i - 1].x}
-                y2={defaultEnclosureOrigo.y - margin + tickLength / 2}
-                x2={i === 0 ? defaultEnclosureOrigo.x : defaultEnclosureOrigo.x + selection.row.points[i - 1].x}
-                stroke="lightgray"
-              />
-              <line
-                y1={defaultEnclosureOrigo.y - margin - tickLength / 2}
-                x1={defaultEnclosureOrigo.x + point.x}
-                y2={defaultEnclosureOrigo.y - margin + tickLength / 2}
-                x2={defaultEnclosureOrigo.x + point.x}
-                stroke="lightgray"
-              />
-            </g>
-          ))}
+          {selection.row.points.map((point, i) => {
+            const previousPoint = selection.row.points[i - 1]
+            if (previousPoint === undefined) {
+              return null
+            }
+            return (
+              <g key={i}>
+                <line
+                  y1={defaultEnclosureOrigo.y - margin}
+                  x1={i === 0 ? defaultEnclosureOrigo.x : defaultEnclosureOrigo.x + previousPoint.x}
+                  y2={defaultEnclosureOrigo.y - margin}
+                  x2={defaultEnclosureOrigo.x + point.x}
+                  stroke="lightgray"
+                />
+                <line
+                  y1={defaultEnclosureOrigo.y - margin - tickLength / 2}
+                  x1={i === 0 ? defaultEnclosureOrigo.x : defaultEnclosureOrigo.x + previousPoint.x}
+                  y2={defaultEnclosureOrigo.y - margin + tickLength / 2}
+                  x2={i === 0 ? defaultEnclosureOrigo.x : defaultEnclosureOrigo.x + previousPoint.x}
+                  stroke="lightgray"
+                />
+                <line
+                  y1={defaultEnclosureOrigo.y - margin - tickLength / 2}
+                  x1={defaultEnclosureOrigo.x + point.x}
+                  y2={defaultEnclosureOrigo.y - margin + tickLength / 2}
+                  x2={defaultEnclosureOrigo.x + point.x}
+                  stroke="lightgray"
+                />
+              </g>
+            )
+          })}
           <line
             y1={defaultEnclosureOrigo.y - margin}
-            x1={defaultEnclosureOrigo.x + selection.row.points[selection.row.points.length - 1].x}
+            x1={defaultEnclosureOrigo.x + lastPoint.x}
             y2={defaultEnclosureOrigo.y - margin}
             x2={defaultEnclosureOrigo.x + enclosure.width}
             stroke="lightgray"
           />
           <line
             y1={defaultEnclosureOrigo.y - margin - tickLength / 2}
-            x1={defaultEnclosureOrigo.x + selection.row.points[selection.row.points.length - 1].x}
+            x1={defaultEnclosureOrigo.x + lastPoint.x}
             y2={defaultEnclosureOrigo.y - margin + tickLength / 2}
-            x2={defaultEnclosureOrigo.x + selection.row.points[selection.row.points.length - 1].x}
+            x2={defaultEnclosureOrigo.x + lastPoint.x}
             stroke="lightgray"
           />
           <line

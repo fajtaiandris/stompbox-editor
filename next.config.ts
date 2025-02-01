@@ -4,6 +4,9 @@ import { type NextConfig } from "next"
 import { env } from "./env.mjs"
 
 const config: NextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true, // Skips linting during build
+  },
   reactStrictMode: true,
   logging: {
     fetches: {

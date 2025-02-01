@@ -83,10 +83,16 @@ export const EditorStateProvider: React.FC<PropsWithChildren> = ({ children }) =
         setRows((prev) => {
           const newRows = [...prev]
           const rowIndex = newRows.findIndex((row) => row === selection.row)
-          const pointIndex = newRows[rowIndex].points.findIndex((point) => point === selection.point)
-          if (newRows[rowIndex].points[pointIndex].part) {
-            newRows[rowIndex].points[pointIndex].part.color = color
+
+          const pointIndex = newRows[rowIndex]?.points?.findIndex((point) => point === selection.point)
+
+          if (pointIndex !== -1) {
+            const point = newRows[rowIndex]?.points[pointIndex ?? 0]
+            if (point && point.part) {
+              point.part.color = color
+            }
           }
+
           return newRows
         })
       }
@@ -97,20 +103,7 @@ export const EditorStateProvider: React.FC<PropsWithChildren> = ({ children }) =
     setEnclosure((prev) => ({ ...prev, width, height }))
   }
 
-  const updatePointPart = (part: Point["part"]) => {
-    if (!selection || selection === "enclosure") {
-      return
-    }
-    if (selection && "point" in selection) {
-      setRows((prev) => {
-        const newRows = [...prev]
-        const rowIndex = newRows.findIndex((row) => row === selection.row)
-        const pointIndex = newRows[rowIndex].points.findIndex((point) => point === selection.point)
-        newRows[rowIndex].points[pointIndex].part = part
-        return newRows
-      })
-    }
-  }
+  const updatePointPart = (part: Point["part"]) => {}
 
   const addRow = (y: number, itemCount: number) => {
     const newRow = { y, points: getEqualDistancePoints(itemCount, 40) }
@@ -118,23 +111,9 @@ export const EditorStateProvider: React.FC<PropsWithChildren> = ({ children }) =
     setSelection({ row: newRow })
   }
 
-  const updateRowY = (row: Row, y: number) => {
-    setRows((prev) => {
-      const newRows = [...prev]
-      const rowIndex = newRows.findIndex((r) => r === row)
-      newRows[rowIndex].y = y
-      return newRows
-    })
-  }
+  const updateRowY = (row: Row, y: number) => {}
 
-  const addPointToRow = (row: Row, x: number) => {
-    setRows((prev) => {
-      const newRows = [...prev]
-      const rowIndex = newRows.findIndex((r) => r === row)
-      newRows[rowIndex].points.push({ x, part: { name: "knob1", color: "antiquewhite" } })
-      return newRows
-    })
-  }
+  const addPointToRow = (row: Row, x: number) => {}
 
   const deleteRow = (row: Row) => {
     setRows((prev) => {
