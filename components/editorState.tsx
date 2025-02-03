@@ -103,7 +103,21 @@ export const EditorStateProvider: React.FC<PropsWithChildren> = ({ children }) =
     setEnclosure((prev) => ({ ...prev, width, height }))
   }
 
-  const updatePointPart = (part: Point["part"]) => {}
+  const updatePointPart = (part: Point["part"]) => {
+    if (!selection || selection === "enclosure" || !("point" in selection)) return
+    setRows((prev) => {
+      const newRows = [...prev]
+      const rowIndex = newRows.findIndex((row) => row === selection.row)
+      const newRow = newRows[rowIndex]
+      if (!newRow) return prev
+      const pointIndex = newRow.points?.findIndex((point) => point === selection.point)
+      if (pointIndex === -1) return prev
+      const newPoint = newRow.points[pointIndex]
+      if (!newPoint) return prev
+      newPoint.part = part
+      return newRows
+    })
+  }
 
   const addRow = (y: number, itemCount: number) => {
     const newRow = { y, points: getEqualDistancePoints(itemCount, 40) }
@@ -111,9 +125,28 @@ export const EditorStateProvider: React.FC<PropsWithChildren> = ({ children }) =
     setSelection({ row: newRow })
   }
 
-  const updateRowY = (row: Row, y: number) => {}
+  const updateRowY = (row: Row, y: number) => {
+    setRows((prev) => {
+      const newRows = [...prev]
+      const rowIndex = newRows.findIndex((r) => r === row)
+      if (rowIndex === -1) return prev
+      const newRow = newRows[rowIndex]
+      if (!newRow) return prev
+      newRow.y = y
+      return newRows
+    })
+  }
 
-  const addPointToRow = (row: Row, x: number) => {}
+  const addPointToRow = (row: Row, x: number) => {
+    setRows((prev) => {
+      const newRows = [...prev]
+      const rowIndex = newRows.findIndex((r) => r === row)
+      const newRow = newRows[rowIndex]
+      if (!newRow) return prev
+      newRow.points.push({ x, part: { name: "knob1", color: "antiquewhite" } })
+      return newRows
+    })
+  }
 
   const deleteRow = (row: Row) => {
     setRows((prev) => {

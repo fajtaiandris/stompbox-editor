@@ -55,10 +55,7 @@ export const Ruler: React.FC = () => {
       {!("point" in selection) && (
         <>
           {selection.row.points.map((point, i) => {
-            const previousPoint = selection.row.points[i - 1]
-            if (previousPoint === undefined) {
-              return null
-            }
+            const previousPoint = selection.row.points[i - 1] ?? { x: 0 }
             return (
               <g key={i}>
                 <line
