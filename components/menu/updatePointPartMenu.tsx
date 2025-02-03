@@ -21,6 +21,14 @@ export const UpdatePointPartMenu: React.FC = () => {
   return (
     <MenuItem title="Part">
       <div className="flex flex-wrap gap-[8px]">
+        <svg
+          className={cn(
+            "h-[40px] w-[40px] cursor-pointer rounded-[3px] bg-[gainsboro]",
+            currentPart === undefined && "ring"
+          )}
+          viewBox="0 0 80 80"
+          onClick={() => updatePointPart(undefined)}
+        />
         {Object.keys(partsMap).map((part) => (
           <svg
             key={part}
