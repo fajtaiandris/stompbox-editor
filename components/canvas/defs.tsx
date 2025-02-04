@@ -1,6 +1,18 @@
 export const Defs = () => {
   return (
     <defs>
+      <pattern
+        id="dots"
+        x="0"
+        y="0"
+        width="10"
+        height="10"
+        patternUnits="userSpaceOnUse"
+        patternTransform="translate(-0.5, -0.5)"
+      >
+        <rect x="0" y="0" width="1" height="1" fill="lightgray" />
+      </pattern>
+
       <filter id="inner-shadow" x="-50%" y="-50%" width="200%" height="200%">
         {/* <!-- Create the shadow based on the rectangle's alpha --> */}
         <feComponentTransfer in="SourceAlpha">

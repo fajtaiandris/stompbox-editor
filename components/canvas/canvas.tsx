@@ -52,6 +52,8 @@ export const Canvas: React.FC = () => {
     <svg ref={svgRef} className="h-full w-full bg-white">
       <Defs />
       <g ref={gRef}>
+        <rect width="1000%" height="1000%" fill="url(#dots)" transform="translate(-5000, -5000)" />
+
         <Enclosure />
         <Ruler />
         {rows.map((row, i) => (
