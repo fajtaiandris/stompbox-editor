@@ -1,5 +1,6 @@
 import React from "react"
 
+import { DrillPoint } from "components/canvas/drillPoint"
 import type { PartName } from "components/canvas/partsMap"
 import { partsMap } from "components/canvas/partsMap"
 import { useEditorState } from "components/editorState"
@@ -28,7 +29,9 @@ export const UpdatePointPartMenu: React.FC = () => {
           )}
           viewBox="0 0 80 80"
           onClick={() => updatePointPart(undefined)}
-        />
+        >
+          <g transform="translate(40,40)">{DrillPoint()}</g>
+        </svg>
         {Object.keys(partsMap).map((part) => (
           <svg
             key={part}
