@@ -1,4 +1,4 @@
-import { useEditorState } from "components/editorState"
+import { useEditorState } from "components/state/editorState"
 import { MenuItem } from "./menuItem"
 
 export const EnclosureActionsMenu: React.FC = () => {

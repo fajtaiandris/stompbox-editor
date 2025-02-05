@@ -1,8 +1,8 @@
 "use client"
 
 import { Canvas } from "components/canvas/canvas"
-import { EditorStateProvider } from "components/editorState"
 import { Menu } from "components/menu/menu"
+import { EditorStateProvider } from "components/state/editorState"
 
 export default function Web() {
   return (

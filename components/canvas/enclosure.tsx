@@ -1,4 +1,4 @@
-import { useEditorState } from "components/editorState"
+import { useEditorState } from "components/state/editorState"
 import { strokeColor } from "components/utils"
 
 export const defaultEnclosureOrigo = { x: 610, y: 100 }

@@ -1,6 +1,6 @@
 import React from "react"
 
-import { useEditorState } from "components/editorState"
+import { useEditorState } from "components/state/editorState"
 import { EnclosureActionsMenu } from "./enclosureActionsMenu"
 import { RowActionsMenu } from "./rowActionsMenu"
 import { UpdateColorMenu } from "./updateColorMenu"

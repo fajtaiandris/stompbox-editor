@@ -1,7 +1,7 @@
 import React from "react"
 
+import { useEditorState } from "components/state/editorState"
 import { defaultEnclosureOrigo } from "./enclosure"
-import { useEditorState } from "../editorState"
 
 export const Ruler: React.FC = () => {
   const { selection, enclosure } = useEditorState()

@@ -1,6 +1,6 @@
 import React from "react"
 
-import { useEditorState } from "components/editorState"
+import { useEditorState } from "components/state/editorState"
 import { cn } from "components/utils"
 import { MenuItem } from "./menuItem"
 

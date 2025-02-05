@@ -1,9 +1,9 @@
 import React from "react"
 
 import { DrillPoint } from "components/canvas/drillPoint"
-import type { PartName } from "components/canvas/partsMap"
 import { partsMap } from "components/canvas/partsMap"
-import { useEditorState } from "components/editorState"
+import { useEditorState } from "components/state/editorState"
+import { PartName } from "components/state/types"
 import { cn } from "components/utils"
 import { MenuItem } from "./menuItem"
 

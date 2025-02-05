@@ -1,8 +1,10 @@
+"use client"
+
 import * as d3 from "d3"
 import React, { useEffect, useRef, useState } from "react"
 
-import type { Point, Row } from "components/editorState"
-import { useEditorState } from "components/editorState"
+import { useEditorState } from "components/state/editorState"
+import { Point, Row } from "components/state/types"
 import { Defs } from "./defs"
 import { DrillPoint } from "./drillPoint"
 import { defaultEnclosureOrigo, Enclosure } from "./enclosure"
@@ -65,9 +67,9 @@ export const Canvas: React.FC = () => {
                 onClick={() => handleClick(row, point)}
               >
                 {DrillPoint()}
-                {point.plate && point.plate()}
+                {point.plate && point.plate}
                 {point.part &&
-                  partsMap[point.part.name](
+                  partsMap[point.part.name as keyof typeof partsMap](
                     (selection !== "enclosure" && selection?.row === row && !("point" in selection)) ||
                       (!!selection &&
                         selection !== "enclosure" &&
