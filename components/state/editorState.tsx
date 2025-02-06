@@ -85,7 +85,7 @@ const saveStompboxToLocalStorage = (stompbox: Stompbox) => {
 export const EditorStateProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [selection, setSelection] = useState<Selection>(undefined)
   const [stompbox, setStompbox] = useState<Stompbox>(defaultStompbox)
-  const [viewMode, setViewMode] = useState<ViewMode>("drill")
+  const [viewMode, setViewMode] = useState<ViewMode>("normal")
 
   useEffect(() => {
     setStompbox(loadStompboxFromLocalStorage())
