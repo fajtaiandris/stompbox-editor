@@ -12,7 +12,7 @@ import { partsMap } from "./partsMap"
 import { Ruler } from "./ruler"
 
 export const Canvas: React.FC = () => {
-  const { selection, setSelection, rows } = useEditorState()
+  const { selection, setSelection, rows, viewMode } = useEditorState()
   const svgRef = useRef<SVGSVGElement>(null)
   const gRef = useRef<SVGGElement>(null)
   const [_, setTransform] = useState(d3.zoomIdentity)
@@ -64,11 +64,12 @@ export const Canvas: React.FC = () => {
               <g
                 key={j}
                 transform={`translate(${point.x + defaultEnclosureOrigo.x}, ${row.y + defaultEnclosureOrigo.y})`}
-                onClick={() => handleClick(row, point)}
+                onClick={viewMode === "normal" ? () => handleClick(row, point) : undefined}
               >
-                {DrillPoint()}
-                {point.plate && point.plate}
+                {DrillPoint(viewMode)}
+                {point.plate && viewMode === "normal" && point.plate}
                 {point.part &&
+                  viewMode === "normal" &&
                   partsMap[point.part.name as keyof typeof partsMap](
                     (selection !== "enclosure" && selection?.row === row && !("point" in selection)) ||
                       (!!selection &&

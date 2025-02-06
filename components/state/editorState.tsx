@@ -2,7 +2,7 @@
 
 import React, { createContext, PropsWithChildren, useEffect, useMemo, useState } from "react"
 import { FootSwitch } from "components/canvas/footswitch"
-import { Enclosure, Point, Row, Stompbox } from "./types"
+import { Enclosure, Point, Row, Stompbox, ViewMode } from "./types"
 
 const getEqualDistancePoints = (count: number, margin: number): Point[] => {
   const start = 0 + margin
@@ -30,6 +30,7 @@ type EditorStateContextType = {
   setSelection: (selection: Selection) => void
   rows: Row[]
   enclosure: Enclosure
+  viewMode: ViewMode
   updateSelectionColor: (color: string) => void
   updateEnclosureSize: (width: number, height: number) => void
   updatePointPart: (part: Point["part"]) => void
@@ -37,6 +38,7 @@ type EditorStateContextType = {
   addPointToRow: (row: Row, x: number) => void
   updateRowY: (row: Row, y: number) => void
   deleteRow: (row: Row) => void
+  updateViewMode: (viewMode: ViewMode) => void
 }
 
 const EditorStateContext = createContext<EditorStateContextType>({
@@ -44,6 +46,7 @@ const EditorStateContext = createContext<EditorStateContextType>({
   setSelection: () => void 0,
   rows: [],
   enclosure: { width: 0, height: 0, color: "" },
+  viewMode: "normal",
   updateSelectionColor: () => void 0,
   updateEnclosureSize: () => void 0,
   updatePointPart: () => void 0,
@@ -51,6 +54,7 @@ const EditorStateContext = createContext<EditorStateContextType>({
   addPointToRow: () => void 0,
   updateRowY: () => void 0,
   deleteRow: () => void 0,
+  updateViewMode: () => void 0,
 })
 
 const defaultStompbox: Stompbox = { enclosure: { width: 130, height: 240, color: "antiquewhite" }, rows: [] }
@@ -81,6 +85,7 @@ const saveStompboxToLocalStorage = (stompbox: Stompbox) => {
 export const EditorStateProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [selection, setSelection] = useState<Selection>(undefined)
   const [stompbox, setStompbox] = useState<Stompbox>(defaultStompbox)
+  const [viewMode, setViewMode] = useState<ViewMode>("drill")
 
   useEffect(() => {
     setStompbox(loadStompboxFromLocalStorage())
@@ -173,12 +178,18 @@ export const EditorStateProvider: React.FC<PropsWithChildren> = ({ children }) =
     setSelection(undefined)
   }
 
+  const updateViewMode = (viewMode: ViewMode) => {
+    setSelection(undefined)
+    setViewMode(viewMode)
+  }
+
   const value = useMemo(
     () => ({
       selection,
-      setSelection,
       rows: stompbox.rows,
       enclosure: stompbox.enclosure,
+      viewMode,
+      setSelection,
       updateSelectionColor,
       updateEnclosureSize,
       updatePointPart,
@@ -186,8 +197,9 @@ export const EditorStateProvider: React.FC<PropsWithChildren> = ({ children }) =
       addPointToRow,
       updateRowY,
       deleteRow,
+      updateViewMode,
     }),
-    [selection, stompbox]
+    [selection, stompbox, viewMode]
   )
 
   return <EditorStateContext.Provider value={value}>{children}</EditorStateContext.Provider>

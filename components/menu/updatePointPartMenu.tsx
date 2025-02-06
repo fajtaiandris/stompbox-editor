@@ -30,7 +30,7 @@ export const UpdatePointPartMenu: React.FC = () => {
           viewBox="0 0 80 80"
           onClick={() => updatePointPart(undefined)}
         >
-          <g transform="translate(40,40)">{DrillPoint()}</g>
+          <g transform="translate(40,40)">{DrillPoint("normal")}</g>
         </svg>
         {Object.keys(partsMap).map((part) => (
           <svg

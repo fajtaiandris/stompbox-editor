@@ -39,3 +39,6 @@ export const Stompbox = z.object({
   rows: z.array(Row),
 })
 export type Stompbox = z.infer<typeof Stompbox>
+
+export const ViewMode = z.enum(["normal", "drill"])
+export type ViewMode = z.infer<typeof ViewMode>
