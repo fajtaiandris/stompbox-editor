@@ -4,11 +4,11 @@ import * as d3 from "d3"
 import React, { useEffect, useRef, useState } from "react"
 
 import { useEditorState } from "components/state/editorState"
-import { Point, Row } from "components/state/types"
+import { PartName, Point, Row } from "components/state/types"
 import { Defs } from "./defs"
-import { DrillPoint } from "./drillPoint"
 import { defaultEnclosureOrigo, Enclosure } from "./enclosure"
-import { partsMap } from "./partsMap"
+import { DrillPoint } from "./parts/drillPoint"
+import { partsMap } from "./parts/partsMap"
 import { Ruler } from "./ruler"
 
 export const Canvas: React.FC = () => {
@@ -60,27 +60,27 @@ export const Canvas: React.FC = () => {
         <Ruler />
         {rows.map((row, i) => (
           <g key={i}>
-            {row.points.map((point, j) => (
-              <g
-                key={j}
-                transform={`translate(${point.x + defaultEnclosureOrigo.x}, ${row.y + defaultEnclosureOrigo.y})`}
-                onClick={viewMode === "normal" ? () => handleClick(row, point) : undefined}
-              >
-                {DrillPoint(viewMode)}
-                {point.plate && viewMode === "normal" && point.plate}
-                {point.part &&
-                  viewMode === "normal" &&
-                  partsMap[point.part.name as keyof typeof partsMap](
-                    (selection !== "enclosure" && selection?.row === row && !("point" in selection)) ||
-                      (!!selection &&
-                        selection !== "enclosure" &&
-                        "point" in selection &&
-                        selection.row === row &&
-                        selection.point === point),
-                    point.part.color
-                  )}
-              </g>
-            ))}
+            {row.points.map((point, j) => {
+              const Part = point.part ? partsMap[PartName.parse(point.part.name)] : undefined
+              const isPartSelected =
+                (selection !== "enclosure" && selection?.row === row && !("point" in selection)) ||
+                (!!selection &&
+                  selection !== "enclosure" &&
+                  "point" in selection &&
+                  selection.row === row &&
+                  selection.point === point)
+              return (
+                <g
+                  key={j}
+                  transform={`translate(${point.x + defaultEnclosureOrigo.x}, ${row.y + defaultEnclosureOrigo.y})`}
+                  onClick={viewMode === "normal" ? () => handleClick(row, point) : undefined}
+                >
+                  <DrillPoint viewMode={viewMode} isSelected={isPartSelected} color="" />
+                  {point.plate && viewMode === "normal" && point.plate}
+                  {Part && <Part viewMode={viewMode} isSelected={isPartSelected} color={point?.part?.color ?? ""} />}
+                </g>
+              )
+            })}
           </g>
         ))}
       </g>

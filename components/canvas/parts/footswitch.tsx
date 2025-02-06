@@ -1,6 +1,9 @@
 import { strokeColor } from "components/utils"
+import { Part } from "./type"
 
-export const FootSwitch = (isSelected: boolean) => {
+export const FootSwitch: Part = ({ viewMode, isSelected }) => {
+  if (viewMode !== "normal") return null
+
   const sideLength = 20 // Length of a side of the hexagon
   const height = Math.sqrt(3) * sideLength // Height of the hexagon
   const points = [

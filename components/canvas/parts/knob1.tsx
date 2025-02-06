@@ -1,6 +1,8 @@
 import { strokeColor } from "components/utils"
+import { Part } from "./type"
 
-export const Knob1 = (isSelected: boolean, color: string) => {
+export const Knob1: Part = ({ viewMode, isSelected, color }) => {
+  if (viewMode !== "normal") return null
   return (
     <g>
       <circle cx={0} cy={0} r={20} fill={color} stroke={strokeColor(isSelected)} />

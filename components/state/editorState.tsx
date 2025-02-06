@@ -1,7 +1,7 @@
 "use client"
 
 import React, { createContext, PropsWithChildren, useEffect, useMemo, useState } from "react"
-import { FootSwitch } from "components/canvas/footswitch"
+import { FootSwitch } from "components/canvas/parts/footswitch"
 import { Enclosure, Point, Row, Stompbox, ViewMode } from "./types"
 
 const getEqualDistancePoints = (count: number, margin: number): Point[] => {
