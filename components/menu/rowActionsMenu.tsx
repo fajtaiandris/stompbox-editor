@@ -1,4 +1,7 @@
+import { CommitIcon, TrashIcon } from "@radix-ui/react-icons"
 import { useEditorState } from "components/state/editorState"
+import { IconButton } from "components/ui/IconButton/IconButton"
+import { IconButtonRow } from "components/ui/IconButtonRow/IconButtonRow"
 import { MenuItem } from "./menuItem"
 
 export const RowActionsMenu: React.FC = () => {
@@ -8,22 +11,14 @@ export const RowActionsMenu: React.FC = () => {
 
   return (
     <MenuItem title="Row">
-      <div className="flex gap-x-[8px]">
-        <button
-          type="button"
-          className="h-[30px] min-w-[30px] rounded-[3px] bg-[lightgray] text-black"
-          onClick={selectedRow ? () => deleteRow(selectedRow) : undefined}
-        >
-          -
-        </button>
-        <button
-          type="button"
-          className="h-[30px] min-w-[30px] rounded-[3px] bg-[lightgray] text-black"
-          onClick={selectedRow ? () => addPointToRow(selectedRow, maxX + 50) : undefined}
-        >
-          +
-        </button>
-      </div>
+      <IconButtonRow>
+        <IconButton onClick={selectedRow ? () => deleteRow(selectedRow) : undefined}>
+          <TrashIcon />
+        </IconButton>
+        <IconButton onClick={selectedRow ? () => addPointToRow(selectedRow, maxX + 50) : undefined}>
+          <CommitIcon />
+        </IconButton>
+      </IconButtonRow>
     </MenuItem>
   )
 }
